@@ -4,13 +4,13 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from app.core.logging import logger
-from app.db.models import (
+from app.database.models import (
     ChannelConnection,
     CreatorMemory,
     VideoObservation,
     NicheSearchCache,
 )
-from app.modules.integrations.youtube import YouTubeAdapter
+from app.agent.providers.youtube import YouTubeAdapter
 
 
 class NicheRadarService:

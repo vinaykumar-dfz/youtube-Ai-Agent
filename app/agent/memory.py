@@ -4,7 +4,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import Session
 
 from app.core.logging import logger
-from app.db.models import CreatorMemory
+from app.database.models import CreatorMemory
 
 
 class CreatorMemoryService:

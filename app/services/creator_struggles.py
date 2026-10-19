@@ -9,10 +9,10 @@ from urllib.parse import urlparse
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.db.models import CreatorStruggleCache
-from app.modules.integrations.llm import OpenRouterLLMClient
-from app.modules.integrations.tavily import TavilySearchClient
-from app.modules.integrations.youtube import YouTubeAdapter
+from app.database.models import CreatorStruggleCache
+from app.agent.providers.llm import OpenRouterLLMClient
+from app.agent.providers.tavily import TavilySearchClient
+from app.agent.providers.youtube import YouTubeAdapter
 
 logger = logging.getLogger("growtube.creator_struggles")
 

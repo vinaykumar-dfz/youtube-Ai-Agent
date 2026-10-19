@@ -1,7 +1,7 @@
 from typing import Any
 from sqlalchemy.orm import Session
 
-from app.db.models import AnalysisJob, WorkflowEvent
+from app.database.models import AnalysisJob, WorkflowEvent
 
 
 class JobManagementService:

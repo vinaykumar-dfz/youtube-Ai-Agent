@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
-from app.db.session import get_db
-from app.modules.opportunity_engine.service import OpportunityEngineService
+from app.database.session import get_db
+from app.services.opportunity_engine import OpportunityEngineService
 
 router = APIRouter(prefix="/opportunities", tags=["Content Opportunities"])
 

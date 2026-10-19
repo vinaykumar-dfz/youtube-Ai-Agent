@@ -7,26 +7,26 @@ import uuid
 from sqlalchemy.orm import Session
 
 from app.core.logging import logger
-from app.db.models import (
+from app.database.models import (
     ChannelConnection,
     Conversation,
     ConversationMessage,
     AnalysisReport,
 )
-from app.modules.agent_runtime.tools import (
+from app.agent.tools import (
     ToolContext,
     execute_tool,
     get_agent_tool_definitions,
 )
-from app.modules.creator_memory.service import CreatorMemoryService
-from app.modules.agent_runtime.execution_manager import (
+from app.agent.memory import CreatorMemoryService
+from app.agent.runtime import (
     ExecutionRun,
     execution_manager,
     get_tool_meta,
     generate_safe_tool_summary,
 )
-from app.modules.integrations.llm import OllamaLLMClient
-from app.modules.integrations.youtube import YouTubeAdapter
+from app.agent.providers.llm import OllamaLLMClient
+from app.agent.providers.youtube import YouTubeAdapter
 
 
 def _extract_youtube_target(text: str) -> str | None:

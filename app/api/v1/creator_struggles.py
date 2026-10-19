@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
 from app.core.logging import logger
-from app.db.session import get_db
-from app.modules.creator_struggles.service import UniversalStrugglesEngine
+from app.database.session import get_db
+from app.services.creator_struggles import UniversalStrugglesEngine
 
 router = APIRouter(prefix="/creator-struggles", tags=["Creator Struggles"])
 

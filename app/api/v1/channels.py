@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
-from app.db.models import AnalysisReport, ChannelConnection, ContentOpportunity
-from app.db.session import get_db
-from app.modules.analytics.service import AnalyticsService
+from app.database.models import AnalysisReport, ChannelConnection, ContentOpportunity
+from app.database.session import get_db
+from app.services.analytics import AnalyticsService
 
 router = APIRouter(prefix="/channels", tags=["Channel Overview"])
 

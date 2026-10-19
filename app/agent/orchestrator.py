@@ -3,22 +3,22 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from app.core.logging import logger
-from app.db.models import AnalysisJob, Workspace
-from app.modules.agent_runtime.state import (
+from app.database.models import AnalysisJob, Workspace
+from app.agent.state import (
     AnalysisWorkflowState,
     WorkflowStage,
     can_transition,
 )
-from app.modules.agent_runtime.tools import (
+from app.agent.tools import (
     ToolContext,
     execute_tool,
     get_agent_tool_definitions,
 )
-from app.modules.creator_memory.service import CreatorMemoryService
-from app.modules.analytics.competitor_analyzer import CompetitorAnalyzer
-from app.modules.analytics.service import AnalyticsService
-from app.modules.integrations.llm import OpenRouterLLMClient
-from app.modules.job_management.service import JobManagementService
+from app.agent.memory import CreatorMemoryService
+from app.services.competitor_analyzer import CompetitorAnalyzer
+from app.services.analytics import AnalyticsService
+from app.agent.providers.llm import OpenRouterLLMClient
+from app.services.job_management import JobManagementService
 
 
 class AgentOrchestrator:

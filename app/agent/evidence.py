@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.db.models import EvidenceRecord, FindingRecord
+from app.database.models import EvidenceRecord, FindingRecord
 
 
 class EvidenceService:

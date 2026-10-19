@@ -4,7 +4,7 @@ from typing import Any
 from sqlalchemy import Boolean, DateTime, Float, ForeignKey, Integer, String, Text, JSON
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-from app.db.base import Base, TimestampMixin
+from app.database.base import Base, TimestampMixin
 
 
 def generate_uuid() -> str:

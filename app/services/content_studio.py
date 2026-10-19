@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from app.db.models import ContentScript
-from app.modules.integrations.llm import OpenRouterLLMClient
+from app.database.models import ContentScript
+from app.agent.providers.llm import OpenRouterLLMClient
 
 
 class ContentStudioService:

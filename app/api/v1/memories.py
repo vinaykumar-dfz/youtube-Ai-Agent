@@ -2,13 +2,13 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
-from app.db.session import get_db
-from app.modules.creator_memory.schemas import (
+from app.database.session import get_db
+from app.agent.memory_schemas import (
     CreatorMemoryCreate,
     CreatorMemoryResponse,
     CreatorProfileUpdate,
 )
-from app.modules.creator_memory.service import CreatorMemoryService
+from app.agent.memory import CreatorMemoryService
 
 router = APIRouter(prefix="/memories", tags=["Creator Memory"])
 

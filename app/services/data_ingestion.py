@@ -5,8 +5,8 @@ from pathlib import Path
 from typing import Any
 
 from app.core.errors import InvalidInputException
-from app.modules.data_ingestion.schemas import AnalysisSubmission, IngestionResult, InputType
-from app.modules.integrations.youtube import YouTubeAdapter
+from app.services.ingestion_schemas import AnalysisSubmission, IngestionResult, InputType
+from app.agent.providers.youtube import YouTubeAdapter
 
 
 class DataIngestionService:

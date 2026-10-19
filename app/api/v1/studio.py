@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
-from app.db.session import get_db
-from app.modules.content_studio.service import ContentStudioService
+from app.database.session import get_db
+from app.services.content_studio import ContentStudioService
 
 router = APIRouter(prefix="/studio", tags=["Content Studio & Script Generator"])
 

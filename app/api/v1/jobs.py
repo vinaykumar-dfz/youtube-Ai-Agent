@@ -7,9 +7,9 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
 from app.core.config import settings
-from app.db.session import get_db
-from app.modules.job_management.schemas import JobResponse
-from app.modules.job_management.service import JobManagementService
+from app.database.session import get_db
+from app.services.job_schemas import JobResponse
+from app.services.job_management import JobManagementService
 from app.workers.worker import process_next_job
 
 router = APIRouter(prefix="/jobs", tags=["Jobs & Workflow"])

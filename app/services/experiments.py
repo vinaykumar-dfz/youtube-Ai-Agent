@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.db.models import ExperimentRecord
+from app.database.models import ExperimentRecord
 
 
 class ExperimentService:

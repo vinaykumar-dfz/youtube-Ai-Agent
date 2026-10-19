@@ -4,9 +4,9 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.core.logging import logger
-from app.db.models import AnalysisJob
-from app.db.session import SessionLocal
-from app.modules.agent_runtime.orchestrator import AgentOrchestrator
+from app.database.models import AnalysisJob
+from app.database.session import SessionLocal
+from app.agent.orchestrator import AgentOrchestrator
 
 _worker_thread: threading.Thread | None = None
 _stop_signal = threading.Event()

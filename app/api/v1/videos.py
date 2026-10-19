@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
-from app.db.session import get_db
-from app.modules.analytics.video_analysis_service import VideoAnalysisService
+from app.database.session import get_db
+from app.services.video_analysis import VideoAnalysisService
 
 router = APIRouter(prefix="/videos", tags=["Video Analysis"])
 

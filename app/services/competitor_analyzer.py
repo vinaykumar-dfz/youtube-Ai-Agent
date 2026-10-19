@@ -131,7 +131,7 @@ class CompetitorAnalyzer:
         }
 
         try:
-            from app.modules.integrations.llm import OpenRouterLLMClient
+            from app.agent.providers.llm import OpenRouterLLMClient
             llm_client = OpenRouterLLMClient()
             if llm_client.is_configured:
                 return llm_client.enhance_topic_and_intent(title, desc, base_data)

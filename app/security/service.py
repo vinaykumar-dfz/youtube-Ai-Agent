@@ -4,9 +4,9 @@ from datetime import UTC, datetime, timedelta
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.core.security import create_access_token, hash_password, verify_password
-from app.db.models import Membership, Organization, User, UserSession, Workspace
-from app.modules.identity.schemas import (
+from app.database.models import Membership, Organization, User, UserSession, Workspace
+from app.security.crypto import create_access_token, decode_access_token, hash_password, verify_password
+from app.security.schemas import (
     TokenResponse,
     UserCreate,
     UserLogin,
@@ -229,7 +229,6 @@ class IdentityService:
         )
         if not session and "." in session_token:
             # Fallback for JWT access token format
-            from app.core.security import decode_access_token
             payload = decode_access_token(session_token)
             if payload and payload.get("sub"):
                 active = (

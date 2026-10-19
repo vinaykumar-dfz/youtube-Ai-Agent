@@ -126,25 +126,38 @@ youtube-growth-agent/
 │   └── js/                           # config.js, api.js, auth.js, dashboard.js, analyze.js...
 ├── app/
 │   ├── main.py                       # FastAPI Application Entrypoint & Static Server
-│   ├── api/
+│   ├── api/                          # HTTP Routers, Endpoints & Serialization
 │   │   ├── deps.py                   # Tenant Context, Auth & DB Dependencies
-│   │   └── v1/                       # 12 Modular REST Routers
-│   │       ├── auth.py               # Google OAuth 2.0 & Session Management
-│   │       ├── channels.py           # Channel Baselines & Metrics
-│   │       ├── videos.py             # Video Analysis & Retention Curves
-│   │       ├── jobs.py               # Durable Analysis Jobs & Event Streaming
-│   │       ├── reports.py            # Evidence-Verified Growth Reports
-│   │       ├── opportunities.py      # Ranked Opportunity Engine Endpoints
-│   │       ├── niche_radar.py        # Outlier Detection & Niche Trends
-│   │       ├── creator_struggles.py  # Multi-Source Creator Research
-│   │       ├── conversations.py      # Ask AI Assistant & Streaming Chat
-│   │       ├── studio.py             # Script Generation & Quality Checklist
-│   │       ├── experiments.py        # Pre/Post Publish Hypothesis Tracking
-│   │       ├── memories.py           # Channel Playbook & Persona Memory
-│   │       └── router.py             # Master v1 API Router Aggregator
-│   ├── core/                         # Configuration, Security, Logging, Custom Exceptions
-│   ├── db/                           # Session Engine (WAL), Models, Seeding, Alembic env
-│   ├── modules/                      # 13 Domain Modules (Identity, Analytics, Agent, etc.)
+│   │   └── v1/                       # Modular REST Routers (auth, videos, conversations...)
+│   ├── agent/                        # Unified AI Agent Engine
+│   │   ├── agent.py                  # Conversational Q&A & Strategy Agent
+│   │   ├── orchestrator.py           # 5-Stage Bounded Workflow State Machine
+│   │   ├── runtime.py                # Execution Manager (Runs, SSE Events)
+│   │   ├── tools.py                  # Agent Tool Registry (24 bounded tools)
+│   │   ├── memory.py                 # Creator Long-Term Memory & Playbook
+│   │   ├── evidence.py               # 4-Tier Epistemic Evidence Graph
+│   │   ├── state.py                  # State Machine & Typed Checkpoints
+│   │   └── providers/                # LLM (Ollama/OpenRouter), YouTube, Tavily
+│   ├── security/                     # Consolidated Security & Identity
+│   │   ├── crypto.py                 # Password Hashing, JWT Tokens, CSRF, URL Safety
+│   │   ├── service.py                # IdentityService, Sessions & Google OAuth
+│   │   └── schemas.py                # User, Token, Workspace Schemas
+│   ├── database/                     # Unified Persistence & SQLAlchemy Layer
+│   │   ├── base.py                   # Declarative Base
+│   │   ├── models.py                 # SQLAlchemy Declarative Models
+│   │   ├── session.py                # Engine (WAL Mode) & SessionLocal Factory
+│   │   └── init_db.py                # Table Creation, Compatibility & Seeding
+│   ├── services/                     # Domain-Specific Business Logic
+│   │   ├── video_analysis.py         # Retention Forensics & Drop-Off Diagnostics
+│   │   ├── competitor_analyzer.py    # Channel Baseline & Competitor Matrix
+│   │   ├── niche_radar.py            # Outlier Radar & Breakout Signals
+│   │   ├── creator_struggles.py      # 4-Source Universal Community Research
+│   │   ├── opportunity_engine.py     # Multi-Factor Opportunity Scoring
+│   │   ├── content_studio.py         # Script Generation & 6-Point Checklist
+│   │   ├── experiments.py            # Growth Hypothesis Tracking
+│   │   ├── job_management.py         # Durable Background Job Tracking
+│   │   └── data_ingestion.py         # Target Resolution & Ingestion
+│   ├── core/                         # Shared Infrastructure (Config, Logging, Errors)
 │   └── workers/                      # Durable Background Task Queue & Worker Thread
 ├── data/                             # SQLite Database Storage (growtube.db)
 ├── docs/                             # Platform Screenshots & Documentation

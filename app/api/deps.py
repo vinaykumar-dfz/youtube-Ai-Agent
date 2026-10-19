@@ -3,10 +3,10 @@ from fastapi import Cookie, Depends, Header, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
 from app.core.config import settings
-from app.core.security import decode_access_token
-from app.db.models import User, UserSession
-from app.db.session import get_db
-from app.modules.identity.service import IdentityService
+from app.security import decode_access_token
+from app.database.models import User, UserSession
+from app.database.session import get_db
+from app.security.service import IdentityService
 
 
 class TenantContext:

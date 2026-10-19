@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
-from app.db.models import AnalysisReport, EvidenceRecord
-from app.db.session import get_db
+from app.database.models import AnalysisReport, EvidenceRecord
+from app.database.session import get_db
 
 router = APIRouter(prefix="/reports", tags=["Analysis Reports"])
 

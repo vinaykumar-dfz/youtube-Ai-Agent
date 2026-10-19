@@ -6,10 +6,10 @@ from typing import Any
 from sqlalchemy.orm import Session
 
 from app.core.logging import logger
-from app.db.models import AnalysisReport, EvidenceRecord
-from app.modules.analytics.competitor_analyzer import CompetitorAnalyzer, calculate_age_days, clean_text_tokens
-from app.modules.integrations.llm import OpenRouterLLMClient
-from app.modules.integrations.youtube import YouTubeAdapter, format_iso_duration
+from app.database.models import AnalysisReport, EvidenceRecord
+from app.services.competitor_analyzer import CompetitorAnalyzer, calculate_age_days, clean_text_tokens
+from app.agent.providers.llm import OpenRouterLLMClient
+from app.agent.providers.youtube import YouTubeAdapter, format_iso_duration
 
 
 def _format_count(val: int | float | None) -> str:

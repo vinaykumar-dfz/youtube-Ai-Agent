@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
-from app.db.session import get_db
-from app.modules.experiments.service import ExperimentService
+from app.database.session import get_db
+from app.services.experiments import ExperimentService
 
 router = APIRouter(prefix="/experiments", tags=["Hypothesis & Experiment Tracking"])
 

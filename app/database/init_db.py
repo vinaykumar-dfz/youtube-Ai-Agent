@@ -1,8 +1,8 @@
 from sqlalchemy.orm import Session
 from app.core.logging import logger
-from app.core.security import hash_password
-from app.db.base import Base
-from app.db.models import (
+from app.security import hash_password
+from app.database.base import Base
+from app.database.models import (
     Membership,
     Organization,
     User,
@@ -15,7 +15,7 @@ from app.db.models import (
     NicheSearchCache,
     CreatorStruggleCache,
 )
-from app.db.session import SessionLocal, engine
+from app.database.session import SessionLocal, engine
 
 
 from sqlalchemy import inspect, text

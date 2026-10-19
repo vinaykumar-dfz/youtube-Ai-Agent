@@ -10,10 +10,10 @@ from sqlalchemy.orm import Session
 from app.api.v1.router import api_router
 from app.core.config import settings
 from app.core.logging import logger, setup_logging
-from app.core.security import get_safe_redirect_url
-from app.db.init_db import init_database, seed_default_data
-from app.db.session import get_db
-from app.modules.identity.service import IdentityService
+from app.security import get_safe_redirect_url
+from app.database.init_db import init_database, seed_default_data
+from app.database.session import get_db
+from app.security.service import IdentityService
 from app.workers.worker import start_in_process_worker, stop_in_process_worker
 
 
@@ -27,7 +27,7 @@ async def lifespan(app: FastAPI):
     start_in_process_worker()
 
     # Ollama Local Agent Check
-    from app.modules.integrations.llm import OllamaLLMClient
+    from app.agent.providers.llm import OllamaLLMClient
     ollama_client = OllamaLLMClient()
     ok, status_msg = ollama_client.check_model_status()
     if ok:

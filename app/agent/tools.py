@@ -6,12 +6,12 @@ from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 
 from app.core.logging import logger
-from app.modules.analytics.competitor_analyzer import CompetitorAnalyzer
-from app.modules.creator_memory.service import CreatorMemoryService
-from app.modules.data_ingestion.schemas import AnalysisSubmission
-from app.modules.data_ingestion.service import DataIngestionService
-from app.modules.evidence.service import EvidenceService
-from app.modules.opportunity_engine.service import OpportunityEngineService
+from app.services.competitor_analyzer import CompetitorAnalyzer
+from app.agent.memory import CreatorMemoryService
+from app.services.ingestion_schemas import AnalysisSubmission
+from app.services.data_ingestion import DataIngestionService
+from app.agent.evidence import EvidenceService
+from app.services.opportunity_engine import OpportunityEngineService
 
 
 # -------------------------------------------------------------
@@ -714,7 +714,7 @@ def tool_retrieve_creator_memories(args: RetrieveMemoriesInput, ctx: ToolContext
 
 def tool_save_analysis_results_and_memories(args: SaveResultsInput, ctx: ToolContext) -> SaveResultsOutput:
     try:
-        from app.db.models import AnalysisReport, ChannelConnection
+        from app.database.models import AnalysisReport, ChannelConnection
 
         ev_service = EvidenceService(ctx.db)
         opp_service = OpportunityEngineService(ctx.db)
@@ -872,7 +872,7 @@ def tool_save_analysis_results_and_memories(args: SaveResultsInput, ctx: ToolCon
 
 def tool_get_latest_analysis_report(args: GetLatestReportInput, ctx: ToolContext) -> GetLatestReportOutput:
     try:
-        from app.db.models import AnalysisReport
+        from app.database.models import AnalysisReport
         report = (
             ctx.db.query(AnalysisReport)
             .filter(AnalysisReport.workspace_id == ctx.workspace_id)
@@ -905,8 +905,8 @@ def tool_get_latest_analysis_report(args: GetLatestReportInput, ctx: ToolContext
 
 def tool_get_connected_channel_summary(args: GetChannelSummaryInput, ctx: ToolContext) -> GetChannelSummaryOutput:
     try:
-        from app.db.models import ChannelConnection, AnalysisReport
-        from app.modules.integrations.youtube import YouTubeAdapter
+        from app.database.models import ChannelConnection, AnalysisReport
+        from app.agent.providers.youtube import YouTubeAdapter
 
         # Deterministic precedence:
         # If an active channel is established in this conversation, check if IT has an OAuth connection.
@@ -1054,8 +1054,8 @@ def tool_get_connected_channel_summary(args: GetChannelSummaryInput, ctx: ToolCo
 
 def tool_get_channel_video_inventory(args: GetChannelInventoryInput, ctx: ToolContext) -> GetChannelInventoryOutput:
     try:
-        from app.db.models import ChannelConnection, AnalysisReport
-        from app.modules.integrations.youtube import YouTubeAdapter
+        from app.database.models import ChannelConnection, AnalysisReport
+        from app.agent.providers.youtube import YouTubeAdapter
 
         # Protected active channel resolution:
         # Default to ctx.active_channel_id if args.channel_id is omitted or references active channel.
@@ -1442,7 +1442,7 @@ def tool_compare_videos_detailed(args: CompareVideosDetailedInput, ctx: ToolCont
 
 def tool_get_video_details(args: GetVideoDetailsInput, ctx: ToolContext) -> GetVideoDetailsOutput:
     try:
-        from app.modules.integrations.youtube import YouTubeAdapter
+        from app.agent.providers.youtube import YouTubeAdapter
         yt = YouTubeAdapter()
         v = yt.fetch_video_details(args.video_id)
         if not v:
@@ -1470,7 +1470,7 @@ def tool_get_video_details(args: GetVideoDetailsInput, ctx: ToolContext) -> GetV
 
 def tool_search_youtube_videos(args: SearchYouTubeVideosInput, ctx: ToolContext) -> SearchYouTubeVideosOutput:
     try:
-        from app.modules.integrations.youtube import YouTubeAdapter
+        from app.agent.providers.youtube import YouTubeAdapter
         yt = YouTubeAdapter()
         results = yt.search_competitor_videos(args.query, max_results=args.max_results)
         return SearchYouTubeVideosOutput(
@@ -1486,7 +1486,7 @@ def tool_search_youtube_videos(args: SearchYouTubeVideosInput, ctx: ToolContext)
 
 def tool_search_youtube_growth_strategies(args: SearchGrowthStrategiesInput, ctx: ToolContext) -> SearchGrowthStrategiesOutput:
     try:
-        from app.modules.integrations.tavily import TavilySearchClient
+        from app.agent.providers.tavily import TavilySearchClient
         tavily = TavilySearchClient()
         q = f"YouTube growth strategy {args.topic} {args.focus_area or ''}".strip()
         res = tavily.search(query=q, max_results=5, include_answer=True)
@@ -1503,7 +1503,7 @@ def tool_search_youtube_growth_strategies(args: SearchGrowthStrategiesInput, ctx
 
 def tool_research_youtube_algorithm_updates(args: ResearchAlgorithmUpdatesInput, ctx: ToolContext) -> ResearchAlgorithmUpdatesOutput:
     try:
-        from app.modules.integrations.tavily import TavilySearchClient
+        from app.agent.providers.tavily import TavilySearchClient
         tavily = TavilySearchClient()
         q = f"YouTube algorithm update announcement {args.query}".strip()
         res = tavily.search(query=q, max_results=5, include_answer=True)
@@ -1520,7 +1520,7 @@ def tool_research_youtube_algorithm_updates(args: ResearchAlgorithmUpdatesInput,
 
 def tool_research_niche_and_trends(args: ResearchNicheTrendsInput, ctx: ToolContext) -> ResearchNicheTrendsOutput:
     try:
-        from app.modules.integrations.tavily import TavilySearchClient
+        from app.agent.providers.tavily import TavilySearchClient
         tavily = TavilySearchClient()
         q = f"YouTube trending topics niche {args.niche} {args.topic or ''}".strip()
         res = tavily.search(query=q, max_results=5)
@@ -1536,7 +1536,7 @@ def tool_research_niche_and_trends(args: ResearchNicheTrendsInput, ctx: ToolCont
 
 def tool_search_competitor_content_strategies(args: SearchCompetitorStrategiesInput, ctx: ToolContext) -> SearchCompetitorStrategiesOutput:
     try:
-        from app.modules.integrations.tavily import TavilySearchClient
+        from app.agent.providers.tavily import TavilySearchClient
         tavily = TavilySearchClient()
         q = f"YouTube content strategy title thumbnail {args.competitor_channel_or_niche}".strip()
         res = tavily.search(query=q, max_results=5)
@@ -1552,7 +1552,7 @@ def tool_search_competitor_content_strategies(args: SearchCompetitorStrategiesIn
 
 def tool_search_external_web(args: SearchExternalWebInput, ctx: ToolContext) -> SearchExternalWebOutput:
     try:
-        from app.modules.integrations.tavily import TavilySearchClient
+        from app.agent.providers.tavily import TavilySearchClient
         tavily = TavilySearchClient()
         res = tavily.search(query=args.query, max_results=args.max_results, include_answer=True)
         return SearchExternalWebOutput(
@@ -1568,8 +1568,8 @@ def tool_search_external_web(args: SearchExternalWebInput, ctx: ToolContext) -> 
 def tool_get_channel_details(args: GetChannelDetailsInput, ctx: ToolContext) -> GetChannelDetailsOutput:
     """Retrieve verified channel metadata and recent uploads for active or specified channel."""
     try:
-        from app.db.models import ChannelConnection
-        from app.modules.integrations.youtube import YouTubeAdapter
+        from app.database.models import ChannelConnection
+        from app.agent.providers.youtube import YouTubeAdapter
 
         target = None
         if ctx.active_channel_id:
@@ -1585,7 +1585,7 @@ def tool_get_channel_details(args: GetChannelDetailsInput, ctx: ToolContext) -> 
             if ch_conn:
                 target = ch_conn.channel_id
         if not target:
-            from app.db.models import AnalysisReport
+            from app.database.models import AnalysisReport
             latest_rep = (
                 ctx.db.query(AnalysisReport)
                 .filter(AnalysisReport.workspace_id == ctx.workspace_id)
@@ -1650,7 +1650,7 @@ def tool_get_channel_details(args: GetChannelDetailsInput, ctx: ToolContext) -> 
 def tool_investigate_creator_struggles(args: InvestigateStrugglesInput, ctx: ToolContext) -> InvestigateStrugglesOutput:
     """Execute multi-source investigation across YouTube, Reddit, X, and Articles via UniversalStrugglesEngine."""
     try:
-        from app.modules.creator_struggles.service import UniversalStrugglesEngine
+        from app.services.creator_struggles import UniversalStrugglesEngine
         engine = UniversalStrugglesEngine()
         res = engine.investigate(user_query=args.query, force_refresh=args.force_refresh, db=ctx.db)
         return InvestigateStrugglesOutput(
@@ -1668,7 +1668,7 @@ def tool_investigate_creator_struggles(args: InvestigateStrugglesInput, ctx: Too
 def tool_search_niche_radar(args: SearchNicheRadarInput, ctx: ToolContext) -> SearchNicheRadarOutput:
     """Search and retrieve real YouTube videos and performance metrics for a specific niche."""
     try:
-        from app.modules.niche_radar.service import NicheRadarService
+        from app.services.niche_radar import NicheRadarService
         res = NicheRadarService.get_or_search_niche_radar(
             workspace_id=ctx.workspace_id,
             niche=args.niche,

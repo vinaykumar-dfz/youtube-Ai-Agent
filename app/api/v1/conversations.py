@@ -11,10 +11,10 @@ from sqlalchemy.orm import Session
 
 from app.api.deps import TenantContext, get_tenant_context
 from app.core.logging import logger
-from app.db.models import Conversation, ConversationMessage
-from app.db.session import SessionLocal, get_db
-from app.modules.agent_runtime.execution_manager import execution_manager
-from app.modules.agent_runtime.qa_agent import QAAgentService
+from app.database.models import Conversation, ConversationMessage
+from app.database.session import SessionLocal, get_db
+from app.agent.runtime import execution_manager
+from app.agent.agent import QAAgentService
 
 router = APIRouter(prefix="/conversations", tags=["Conversations & Ask AI"])
 
@@ -93,7 +93,7 @@ def create_conversation(
     db: Session = Depends(get_db),
 ):
     """Create a new conversational discussion thread for the workspace."""
-    from app.db.models import AnalysisReport, ChannelConnection
+    from app.database.models import AnalysisReport, ChannelConnection
 
     resolved_channel_context = payload.channel_context
     resolved_channel_id = payload.context_channel_id

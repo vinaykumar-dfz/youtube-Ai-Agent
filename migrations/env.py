@@ -9,8 +9,8 @@ from sqlalchemy import engine_from_config, pool
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from app.core.config import settings
-from app.db.base import Base
-import app.db.models  # Ensure all models are imported
+from app.database.base import Base
+import app.database.models  # Ensure all models are imported
 
 config = context.config
 

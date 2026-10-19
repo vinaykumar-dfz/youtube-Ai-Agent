@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session
-from app.db.models import ContentOpportunity
+from app.database.models import ContentOpportunity
 
 
 class OpportunityEngineService:

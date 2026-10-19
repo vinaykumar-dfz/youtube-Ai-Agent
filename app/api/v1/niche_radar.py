@@ -5,8 +5,8 @@ from sqlalchemy.orm import Session
 from app.api.deps import TenantContext, get_tenant_context
 from app.core.errors import YouTubeQuotaExceededException, YouTubeAPIException
 from app.core.logging import logger
-from app.db.session import get_db
-from app.modules.niche_radar.service import NicheRadarService
+from app.database.session import get_db
+from app.services.niche_radar import NicheRadarService
 
 router = APIRouter(prefix="/niche-radar", tags=["Niche Radar"])
 
